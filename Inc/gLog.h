@@ -31,8 +31,17 @@
 
 
 #if GLOG_LOGGING_ENABLED
-	#define GLOG_ERR(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__);  fprintf(stderr, __VA_ARGS__); fflush(stderr)
-	#define GLOG_INFO(...) fprintf(stdout, "%s::%u ",__FILE__, __LINE__);  fprintf(stdout, __VA_ARGS__); fflush(stdout)
+
+	#define GLOG_ERR(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__); \
+	fprintf(stderr, __VA_ARGS__); \
+	fprintf(stderr,"\n"); \
+	fflush(stderr)
+
+	#define GLOG_INFO(...) fprintf(stdout, "%s::%u ",__FILE__, __LINE__); \
+	fprintf(stdout, __VA_ARGS__); \
+	fprintf(stdout,"\n"); \
+	fflush(stdout)
+
 #else  // GLOG_LOGGING_ENABLED
 	#define GLOG_ERR(...) fprintf(stderr, __VA_ARGS__); fflush(stderr)
 	#define GLOG_INFO(...)
@@ -45,25 +54,25 @@
 
 
 // an assert will just log an error but not kill
-#define GLOG_ASSERT(con, msg)         \
-do                                    \
-	if ( !(con) )                     \
-	{                                 \
-		GLOG_ERR(msg)                 \
-	}                                 \
+#define GLOG_ASSERT(con, msg) \
+do \
+	if ( !(con) ) \
+	{ \
+		GLOG_ERR(msg) \
+	} \
 while(0)
 
 // the do while is so a semi-colon can be added at the end when in use
 
 // whereas require will kill the app if the conditions aren't met
 
-#define GLOG_REQUIRE(con, msg)        \
-do                                    \
-	if ( !(con) )                     \
-	{                                 \
-		GLOG_ERR(msg);                \
-		GLOG_DEBUG_BREAK();           \
-	}                                 \
+#define GLOG_REQUIRE(con, msg) \
+do  \
+	if ( !(con) ) \
+	{ \
+		GLOG_ERR(msg); \
+		GLOG_DEBUG_BREAK(); \
+	} \
 while(0)
 
 
