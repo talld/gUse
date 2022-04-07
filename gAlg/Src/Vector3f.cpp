@@ -1,4 +1,4 @@
-#include "../Vector3f.h"
+#include "../Inc/Vector3f.h"
 
 namespace GM
 {
