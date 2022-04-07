@@ -1,0 +1,17 @@
+> Test
+
+  I : 1
+
+  > intTest
+    I : 1
+  <
+
+  > strTest
+    S : TEST
+  <
+
+  > floatTest
+    F : 3.3
+  <
+
+<
