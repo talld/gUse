@@ -12,7 +12,7 @@ include_directories(${G_LOG_INCLUDE_DIR})
 IF( "${GLOG_SRC}" STREQUAL "" )
 
 ELSE()
-    add_library(gLog-static STATIC ${GLOG_SRC})
+    add_library(GLOG-static STATIC ${GLOG_SRC})
 ENDIF()
 
 set(G_LOG_INCLUDE_DIR ${G_LOG_INCLUDE_DIR} PARENT_SCOPE)
