@@ -1,18 +1,26 @@
-cmake_minimum_required(VERSION 3.20)
-project(gLog)
+set(GLOG_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_CXX_STANDARD 20)
+set(GLOG_INCLUDE_DIR
+        ${GLOG_ROOT}/Inc
+        )
 
-set(G_LOG_INCLUDE_DIR
-        ${CMAKE_CURRENT_LIST_DIR}/Inc)
+set(GLOG_SRC
+        Inc/gLog.h
+        Src/glog.c
+        )
 
-include_directories(${G_LOG_INCLUDE_DIR})
+add_library(GLOG STATIC)
 
-# check if there are actually any srcs set
-IF( "${GLOG_SRC}" STREQUAL "" )
+target_sources(GLOG
+        PUBLIC
+        ${GLOG_SRC}
+        )
 
-ELSE()
-    add_library(GLOG-static STATIC ${GLOG_SRC})
-ENDIF()
+target_include_directories(GLOG
+        PUBLIC
+        ${GLOG_INCLUDE_DIR}
+        )
 
-set(G_LOG_INCLUDE_DIR ${G_LOG_INCLUDE_DIR} PARENT_SCOPE)
+
+
+include_directories(${GSTR_INCLUDE_DIR})
