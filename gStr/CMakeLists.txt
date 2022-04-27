@@ -11,7 +11,7 @@ set(GSTR_SRC
 add_library(GSTR STATIC)
 
 target_sources(GSTR
-        PUBLIC
+        PRIVATE
         ${GSTR_SRC}
         )
 
@@ -20,6 +20,6 @@ target_include_directories(GSTR
         ${GSTR_INCLUDE_DIR}
         )
 
-
+target_link_libraries(GSTR GLOG)
 
 include_directories(${GSTR_INCLUDE_DIR})

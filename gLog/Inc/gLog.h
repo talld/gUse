@@ -1,7 +1,7 @@
 #ifndef GLOG_H
 #define GLOG_H
 
-#include <cstdio>
+#include <stdio.h>
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@
 do \
 	if ( !(con) ) \
 	{ \
-		GLOG_ERR(msg) \
+		GLOG_ERR(msg); \
 	} \
 while(0)
 
