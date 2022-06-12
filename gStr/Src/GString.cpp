@@ -1,8 +1,8 @@
 #include "GString.h"
 
-uint64_t loadGDict(void* gDict, char*** dict)
+uint64_t loadGDict(char* gDict, char*** dict)
 {
-	GHeader_t* gHeader = gDict;
+	GHeader_t* gHeader = (GHeader_t*) gDict;
 
 	if(!strncmp(gHeader->ident, "GHDR", 4))
 	{
@@ -15,14 +15,16 @@ uint64_t loadGDict(void* gDict, char*** dict)
 
 	for(size_t i = 0; i < gHeader->gStringCount; i++)
 	{
-		uintptr_t offset = gHeader->gStringOffsetArray[i];
+		uintptr_t offset = (uintptr_t) gHeader->gStringOffsetArray[i];
 		offset += (uintptr_t)gHeader + (uintptr_t)gHeader->headerSize;
 		gHeader->gStringOffsetArray[i] = (char*) offset;
 	}
 
 	*dict = gHeader->gStringOffsetArray;
 
+SUCCESS:
 	return GLOG_SUCCESS;
+
 FAIL:
 	return GLOG_FAIL;
 }

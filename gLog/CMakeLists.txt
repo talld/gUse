@@ -6,7 +6,7 @@ set(GLOG_INCLUDE_DIR
 
 set(GLOG_SRC
         Inc/gLog.h
-        Src/glog.c
+        Src/gLog.c
         )
 
 add_library(GLOG STATIC)

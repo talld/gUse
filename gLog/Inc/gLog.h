@@ -32,6 +32,15 @@
 
 #if GLOG_LOGGING_ENABLED
 
+#if GLOG_DEBUG
+	#define GLOG_DEBUG(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__); \
+	fprintf(stderr, __VA_ARGS__); \
+	fprintf(stderr,"\n"); \
+	fflush(stderr)
+#else
+	#define GLOG_DEBUG(...)
+#endif
+
 	#define GLOG_ERR(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__); \
 	fprintf(stderr, __VA_ARGS__); \
 	fprintf(stderr,"\n"); \

@@ -1,7 +1,7 @@
 #ifndef GSTR_GSTRING_H
 #define GSTR_GSTRING_H
 
-#include <gStr.h>
+#include "gStr.h"
 #include <string.h>
 
 
@@ -22,6 +22,6 @@ typedef struct GString
 	char str[0];
 } GString_t;
 
-uint64_t loadGDict(void* gDict, char*** dict);
+uint64_t loadGDict(char* gDict, char*** dict);
 
 #endif // GSTR_GSTRING_H
