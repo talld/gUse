@@ -75,11 +75,11 @@ while(0)
 
 // whereas require will kill the app if the conditions aren't met
 
-#define GLOG_REQUIRE(con, msg) \
+#define GLOG_REQUIRE(con, ...) \
 do  \
 	if ( !(con) ) \
 	{ \
-		GLOG_ERR(msg); \
+		GLOG_ERR(__VA_ARGS__); \
 		GLOG_DEBUG_BREAK(); \
 	} \
 while(0)
