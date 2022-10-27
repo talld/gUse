@@ -13,7 +13,7 @@ set(GUSE_INC "")
 set(GLOG_ROOT ${GUSE_ROOT}/gLog)
 
 set(GLOG_SRC  
-	${GLOG_ROOT}/Src/gLog.cpp
+	${GLOG_ROOT}/Src/gLog.c
 	)
 
 set(GLOG_INC  
