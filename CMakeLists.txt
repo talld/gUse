@@ -28,6 +28,26 @@ set(GUSE_SRC ${GUSE_SRC} ${GLOG_SRC})
 set(GUSE_HSP ${GUSE_HSP} ${GLOG_HSP})
 set(GUSE_INC ${GUSE_INC} ${GLOG_INC})
 #-----------------------------------------------------------------------------#
+# gAlg                                                                        #
+#-----------------------------------------------------------------------------#
+set(GALG_ROOT ${GUSE_ROOT}/gAlg)
+
+set(GALG_SRC
+		${GALG_ROOT}/Src/dArray.c
+		)
+
+set(GALG_INC
+		${GALG_ROOT}/Inc
+		)
+
+set(GALG_HSP
+		${GALG_ROOT}
+		)
+
+set(GUSE_SRC ${GUSE_SRC} ${GALG_SRC})
+set(GUSE_HSP ${GUSE_HSP} ${GALG_HSP})
+set(GUSE_INC ${GUSE_INC} ${GALG_INC})
+#-----------------------------------------------------------------------------#
 # gStr                                                                        #
 #-----------------------------------------------------------------------------#
 set(GSTR_ROOT ${GUSE_ROOT}/gStr)
