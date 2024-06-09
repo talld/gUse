@@ -11,7 +11,9 @@ GString_t* GString_Create(const char* string);
 
 void GString_Delete(GString_t* string);
 
-char* GString_ToCString(GString_t* gString);
+char* GString_CString(GString_t* gString);
+
+size_t GString_Length(GString_t* gString);
 
 GString_t* GString_Copy(GString_t* gString);
 

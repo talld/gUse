@@ -17,8 +17,9 @@ GString_t* GString_Create(const char* string)
 
 	size_t strLen = strlen(string);
 
-	ret->str = malloc(sizeof(char) * strLen);
+	ret->str = malloc(sizeof(char) * strLen + 1);
 	ret->n = strLen;
+	ret->str[ret->n] = '\0';
 
 	memcpy(ret->str, string, strLen);
 
@@ -31,21 +32,23 @@ void GString_Delete(GString_t* gString)
 	free(gString);
 }
 
-char* GString_ToCString(GString_t* gString)
+char* GString_CString(GString_t* gString)
 {
-	char* str = malloc(gString->n + 1);
-	str[gString->n] = '\0';
+	return gString->str;
+}
 
-	memcpy(str, gString->str, gString->n);
-
-	return str;
+size_t GString_Length(GString_t* gString)
+{
+	return gString->n;
 }
 
 GString_t* GString_Copy(GString_t* gString)
 {
 	GString_t* ret = malloc(sizeof(GString_t));
 
-	ret->str = malloc(sizeof(char) * gString->n);
+	ret->str = malloc(sizeof(char) * gString->n +1);
+	ret->str[gString->n] = '\0';
+
 	memcpy(ret, gString, sizeof(char) * gString->n);
 
 	return ret;
@@ -61,7 +64,8 @@ GString_t* GString_Append(GString_t* dst, GString_t* src)
 	if(newStr)
 	{
 		newStr->n = dstSize + srcSize;
-		newStr->str =  malloc(newStr->n);
+		newStr->str =  malloc(newStr->n + 1);
+		newStr->str[newStr->n] = '\0';
 
 		memcpy(newStr->str, dst->str, dstSize);
 		memcpy(newStr->str + dstSize, src->str, srcSize);

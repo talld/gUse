@@ -6,8 +6,6 @@ set(GSTR_INCLUDE_DIR
 
 set(GSTR_SRC
         ${GSTR_ROOT}/Src/GString.c
-        ${GSTR_ROOT}/Src/GString.h
-        ${GSTR_ROOT}/Inc/gStr.h
         )
 
 add_library(GSTR STATIC)
