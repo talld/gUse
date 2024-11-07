@@ -9,6 +9,7 @@
 typedef struct GTable##name##_t GTable##name##_t;                              \
                                                                                \
 GTable##name##_t* GTable##name##_Create(size_t initalSize);                    \
+GTable##name##_t* GTable##name##_Destroy(GTable##name##_t* gTable);            \
 void GTable##name##_Insert(GTable##name##_t* table, size_t hash, type value);  \
 void GTable##name##_Remove(GTable##name##_t* table, size_t hash);              \
 int GTable##name##_Contains(GTable##name##_t* table, size_t hash);             \
@@ -45,6 +46,21 @@ GTable##name##_t* GTable##name##_Create(size_t initalSize)                     \
 	}                                                                          \
                                                                                \
 	return ret;                                                                \
+}                                                                              \
+                                                                               \
+GTable##name##_t* GTable##name##_Destroy(GTable##name##_t* gTable)             \
+{                                                                              \
+	for(size_t i = 0; i < gTable->bucketsCount; i++)                           \
+	{                                                                             \
+		GTableNode##name##_t* runner = gTable->buckets[i];                        \
+		while(runner != NULL)                                                     \
+		{                                                                         \
+			GTableNode##name##_t* next = runner->next;                            \
+			gAlg_free(runner);                                                    \
+			runner = next;                                                        \
+		}                                                                         \
+	}                                                                             \
+	gAlg_free(gTable);                                                            \
 }                                                                              \
                                                                                \
 void GTable##name##_Insert(GTable##name##_t* table, size_t hash, type value)   \
