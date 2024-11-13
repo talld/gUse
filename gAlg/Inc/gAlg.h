@@ -9,7 +9,7 @@
 #define gAlg_stdLib
 #endif
 
-#define	gAlg_malloc malloc
+#define	gAlg_malloc(X) malloc(X)
 #endif
 
 // calloc
@@ -20,7 +20,7 @@
 #define gAlg_stdLib
 #endif
 
-#define	gAlg_calloc calloc
+#define	gAlg_calloc(X,Y) calloc(X,Y)
 #endif
 
 // realloc
@@ -42,7 +42,7 @@
 #define gAlg_stdLib
 #endif
 
-#define	gAlg_free free
+#define	gAlg_free(X) free(X)
 #endif
 
 // memcpy
