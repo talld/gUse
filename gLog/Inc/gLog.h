@@ -2,12 +2,12 @@
 #define GLOG_H
 
 #include <stdio.h>
+#include <stdint.h>
 
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Handy return codes                                                      ///
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #define GLOG_SUCCESS 0
 #define GLOG_FAIL    1
@@ -34,40 +34,30 @@
 /// Logging                                                                 ///
 ///////////////////////////////////////////////////////////////////////////////
 
+int Glog_Init();
 
-#if GLOG_LOGGING_ENABLED
+#define GLOG_ERR(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n");
 
-#if GLOG_DEBUG
-	#define GLOG_DEBUG(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__); \
-	fprintf(stderr, __VA_ARGS__); \
-	fprintf(stderr,"\n"); \
-	fflush(stderr)
-#else
-	#define GLOG_DEBUG(...)
-#endif
+int Glog_Info(uint8_t channel, size_t threadID, const char* reporter, const char* file, size_t line, const char* format, ...);
 
-	#define GLOG_ERR(...)  fprintf(stderr, "%s::%u ",__FILE__, __LINE__); \
-	fprintf(stderr, __VA_ARGS__); \
-	fprintf(stderr,"\n"); \
-	fflush(stderr)
-
-	#define GLOG_INFO(...) fprintf(stdout, "%s::%u ",__FILE__, __LINE__); \
-	fprintf(stdout, __VA_ARGS__); \
-	fprintf(stdout,"\n"); \
-	fflush(stdout)
-
-#else  // GLOG_LOGGING_ENABLED
-	#define GLOG_ERR(...) fprintf(stderr, __VA_ARGS__); fflush(stderr)
-	#define GLOG_INFO(...)
-#endif // GLOG_LOGGING_ENABLED
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#define GLOG_INFO(channel, threadID, reporter, ...)                                                   \
+	do                                                                                            \
+	{                                                                                             \
+		if(channel)                                                                           \
+		{                                                                                     \
+			Glog_Info(channel, threadID, reporter, __FILE__, __LINE__, __VA_ARGS__, NULL); \
+		}                                                                                     \
+	}                                                                                             \
+	while(0)                                                                                      \
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Assertions                                                              ///
 ///////////////////////////////////////////////////////////////////////////////
 
 
-// an assert will just log an error but not kill
+/* an assert will just log an error but not kill */
 #define GLOG_ASSERT(con, msg) \
 do \
 	if ( !(con) ) \
@@ -76,9 +66,7 @@ do \
 	} \
 while(0)
 
-// the do while is so a semi-colon can be added at the end when in use
-
-// whereas require will kill the app if the conditions aren't met
+/* whereas require will kill the app if the conditions aren't met */
 
 #define GLOG_REQUIRE(con, ...) \
 do  \
