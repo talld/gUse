@@ -149,27 +149,58 @@ int Glog_WriteFormatToChannel(uint8_t channel, const char* format, va_list argp,
 		formatLen++;
 	}
 
-
+	/* we should have done all the text up to the first print token at this point */
+	/* so the next thing should be a print token */
 	for(size_t i = 0; i < printTokenCount; i++)
 	{
-		switch (format[printTokenPositions[i]+1])
+
+		size_t position = printTokenPositions[i] + 1;
+		switch (format[position])
 		{
 			case ('z'):
 			{
-				if (format[printTokenPositions[i] + 2] == 'u')
+				position++;
+				if (format[position] == 'u')
 				{
 					size_t d = va_arg(argp, size_t);
 					Glog_WriteUBase10ToChannel(channel, d, pOutputBuffer, pOutputBufferUsed);
+					position++;
 				}
 				break;
 			}
 
 			case ('s'):
 			{
+				position++;
 				const char* p = va_arg(argp, char*);
 				Glog_WriteStringToChannel(channel, p, pOutputBuffer, pOutputBufferUsed);
 				break;
 			}
+
+			case ('p'):
+			{
+				position++;
+				size_t p = va_arg(argp, size_t);
+				Glog_WriteUBase10ToChannel(channel, p, pOutputBuffer, pOutputBufferUsed);
+				break;
+			}
+		}
+
+		/* go until the next token or end of string */
+		size_t nextPosition = formatLen;
+		if(i != printTokenCount-1)
+		{ /* there is another token to process after this */
+			nextPosition = printTokenPositions[i+1];
+		}
+		while(position < nextPosition)
+		{
+			if ((*pOutputBufferUsed) >= kOutputBufferMax)
+			{
+
+				Glog_WriteOutputBufferToChannel(channel, pOutputBuffer, pOutputBufferUsed);
+			}
+
+			pOutputBuffer[(*pOutputBufferUsed)++] = format[position++];
 		}
 	}
 
