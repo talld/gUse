@@ -6,7 +6,7 @@
 #include <string.h>
 #include <math.h>
 
-const size_t kOutputBufferMax = 255;
+enum {kOutputBufferMax = 255};
 static FILE* sapChannels[255];
 
 static int Glog_InitChannels()
@@ -121,9 +121,9 @@ int Glog_StartRecord(uint8_t channel, size_t threadID, const char* reporter, con
 int Glog_WriteFormatToChannel(uint8_t channel, const char* format, va_list argp, char* pOutputBuffer, size_t* pOutputBufferUsed)
 {
 	/* handle format section */
-	const size_t printTokenMax = 16;
+	enum { kPrintTokenMax = 16 };
 	size_t printTokenCount = 0;
-	size_t printTokenPositions[printTokenMax];
+	size_t printTokenPositions[kPrintTokenMax];
 
 	/* find all the tokens we gotta work with first */
 	/* might as well get some cheeky output to the buffer as well */
