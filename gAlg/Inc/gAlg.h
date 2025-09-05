@@ -6,6 +6,7 @@
 
 #ifndef gAlg_stdLib
 #include "stdlib.h"
+#include "stdint.h"
 #define gAlg_stdLib
 #endif
 
@@ -61,5 +62,9 @@
 #endif
 
 int GAlg_DoTests();
+
+uint32_t gAlg_XorShift32(uint32_t x);
+
+uint32_t gAlg_Murmur3Mix(uint32_t k);
 
 #endif // GALG_H
