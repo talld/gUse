@@ -1,5 +1,6 @@
 #include <gList.h>
 #include <gTable.h>
+#include <gCircularBuffer.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 /// List Tests                                                               ///
@@ -97,6 +98,8 @@ int TableIdentityTest()
 		}
 	}
 
+	GTableInt32_Destroy(gTable);
+
 	return 0;
 
 	FAIL:
@@ -114,11 +117,62 @@ int doTableTests()
 	return 1;
 }
 
+int CircularBufferCountingTest()
+{
+	int err = 0;
+
+	enum {kCircularBufferSize = 10};
+	GCircularBufferInt32_t* gCircularBuffer = GCircularBufferInt32_Create(kCircularBufferSize);
+
+	for(int i = 0; i < kCircularBufferSize; i++)
+	{
+		GCircularBufferInt32_Write(gCircularBuffer, i);
+	}
+
+	for(int i = 0; i < kCircularBufferSize; i++)
+	{
+		int32_t readValue = GCircularBufferInt32_Read(gCircularBuffer);
+		GCircularBufferInt32_Write(gCircularBuffer, -i);
+
+		if(readValue != i)
+		{
+			err |= 1;
+		}
+	}
+
+	for(int i = 0; i < kCircularBufferSize; i++)
+	{
+		int32_t readValue = GCircularBufferInt32_Read(gCircularBuffer);
+		if(readValue != -i)
+		{
+			err |= 1;
+		}
+	}
+
+	return err;
+}
+
+int doCircularBufferTests()
+{
+
+	int err = 0;
+
+	err = CircularBufferCountingTest(); if(err) {goto FAIL;}
+
+	return 0;
+	FAIL:
+	return 1;
+
+
+
+}
+
 int GAlg_DoTests()
 {
 	int err = 0;
 	err = doListTests(); if(err) {goto FAIL;}
 	err = doTableTests(); if(err) {goto FAIL;}
+	err = doCircularBufferTests(); if(err) {goto FAIL;}
 	return 0;
 
 	FAIL:
