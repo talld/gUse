@@ -149,6 +149,8 @@ int CircularBufferCountingTest()
 		}
 	}
 
+	GCircularBufferInt32_Destroy(gCircularBuffer);
+
 	return err;
 }
 
