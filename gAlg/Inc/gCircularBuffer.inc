@@ -1,5 +1,8 @@
 #include "gCircularBuffer.h"
 
+#include "gAlg.h"
+#include <stdint.h>
+
 /****************************************************************************************************/
 #define GCIRCULAR_BUFFER_TYPE_INC(type, name)                                                        \
 typedef struct GCircularBuffer##name##_t GCircularBuffer##name##_t;                                  \
@@ -9,6 +12,7 @@ int GCircularBuffer##name##_Write(GCircularBuffer##name##_t* pGCircularBuffer, t
 type GCircularBuffer##name##_Read(GCircularBuffer##name##_t* pGCircularBuffer);                      \
 int GCircularBuffer##name##_Reset(GCircularBuffer##name##_t* pGCircularBuffer);                      \
 size_t GCircularBuffer##name##_Pending(GCircularBuffer##name##_t* pGCircularBuffer);                 \
+type* GCircularBuffer##name##_Last(GCircularBuffer##name##_t* pGCircularBuffer);                     \
 /****************************************************************************************************/
 #define GCIRCULAR_BUFFER_TYPE_SRC(type, name)                                                        \
 typedef struct GCircularBuffer##name##_t GCircularBuffer##name##_t;                                  \
@@ -69,5 +73,12 @@ int GCircularBuffer##name##_Reset(GCircularBuffer##name##_t* pGCircularBuffer)  
 size_t GCircularBuffer##name##_Pending(GCircularBuffer##name##_t* pGCircularBuffer)                  \
 {                                                                                                    \
 	return pGCircularBuffer->used;                                                                   \
+}                                                                                                    \
+                                                                                                     \
+type* GCircularBuffer##name##_Last(GCircularBuffer##name##_t* pGCircularBuffer)                      \
+{                                                                                                    \
+	size_t capacity = pGCircularBuffer->capacity;                                                    \
+	size_t lastWriteIndex = ((capacity + pGCircularBuffer->writeHead) - 1) % capacity;               \
+	return &pGCircularBuffer->aElements[lastWriteIndex];                                             \
 }                                                                                                    \
 /****************************************************************************************************/
